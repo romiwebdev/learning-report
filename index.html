@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Belajar Harian</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="container w-full max-w-xl mx-auto">
+        <div class="bg-white shadow-2xl rounded-3xl overflow-hidden transform transition-all hover:-translate-y-2 border border-gray-100">
+            <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-1.5"></div>
+            
+            <div class="p-6 md:p-10">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-indigo-600 mb-2">Laporan Belajar Harian</h1>
+                    <p class="text-gray-500">Catat dan dokumentasikan aktivitas belajarmu</p>
+                </div>
+
+                <form id="laporanForm" class="space-y-6">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="tanggal" class="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-calendar text-indigo-500"></i>
+                                </div>
+                                <input 
+                                    type="date" 
+                                    id="tanggal" 
+                                    required
+                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                >
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="hariKe" class="block text-sm font-medium text-gray-700 mb-2">Hari ke</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-hashtag text-indigo-500"></i>
+                                </div>
+                                <input 
+                                    type="number" 
+                                    id="hariKe" 
+                                    placeholder="Masukkan hari ke"
+                                    required
+                                    class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                                >
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="kategori" class="block text-sm font-medium text-gray-700 mb-2">Kategori Aktivitas</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-list-alt text-indigo-500"></i>
+                            </div>
+                            <select 
+                                id="kategori" 
+                                required
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                                <option value="">Pilih Kategori</option>
+                                <option value="nonton video">🎥 Nonton Video</option>
+                                <option value="baca materi">📚 Baca Materi</option>
+                                <option value="latihan soal">✏️ Latihan Soal</option>
+                                <option value="tryout">📝 Tryout</option>
+                                <option value="istirahat">😴 Istirahat</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="aktivitas" class="block text-sm font-medium text-gray-700 mb-2">Detail Aktivitas</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 pt-3 pointer-events-none">
+                                <i class="fas fa-pencil-alt text-indigo-500"></i>
+                            </div>
+                            <textarea 
+                                id="aktivitas" 
+                                rows="3" 
+                                placeholder="Ceritakan aktivitas belajarmu hari ini" 
+                                required
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group aktivitas-section">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Daftar Aktivitas</label>
+                        <div id="aktivitasList" class="mb-3 p-3 border border-dashed border-gray-300 rounded-lg min-h-[100px]"></div>
+
+                        <button 
+                            type="button" 
+                            onclick="tambahAktivitas()"
+                            class="w-full bg-gray-200 text-gray-800 py-2 rounded-lg hover:bg-gray-300 transition flex items-center justify-center"
+                        >
+                            <i class="fas fa-plus-circle mr-2"></i>Tambah Aktivitas
+                        </button>
+                    </div>
+
+                    <div>
+                        <label for="durasi" class="block text-sm font-medium text-gray-700 mb-2">Durasi Belajar</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-clock text-indigo-500"></i>
+                            </div>
+                            <input 
+                                type="text" 
+                                id="durasi" 
+                                placeholder="Contoh: 1.50" 
+                                required
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            >
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="evaluasi" class="block text -sm font-medium text-gray-700 mb-2">Evaluasi Diri (enter untuk menambah evaluasi)</label>
+                        <div class="relative">
+                            <div class="absolute inset-y-0 left-0 pl-3 pt-3 pointer-events-none">
+                                <i class="fas fa-chart-line text-indigo-500"></i>
+                            </div>
+                            <textarea 
+                                id="evaluasi" 
+                                rows="4" 
+                                placeholder="Refleksi dan catatan penting hari ini" 
+                                required
+                                class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button 
+                            type="button" 
+                            onclick="buatLaporan()"
+                            class="flex-1 bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition"
+                        >
+                            <i class="fas fa-save mr-2"></i>Buat Laporan
+                        </button>
+                    </div>
+                </form>
+
+                <div id="laporan" class="mt-6 hidden">
+                    <h2 class="text-xl font-semibold">Laporan Preview</h2>
+                    <div id="previewUmum" class="mt-2 p-4 border border-gray-300 rounded-lg bg-gray-50"></div>
+
+                    <div class="mt-4 flex justify-between">
+                        <a href="#" id="whatsappLink" class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition" target="_blank">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                        <a href="#" id="twitterLink" class="bg-black text-white py-2 px-4 rounded-lg hover:bg-gray-800 transition" target="_blank">
+                          <i class="fab fa-x-twitter"></i> Share ke X
+                      </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
